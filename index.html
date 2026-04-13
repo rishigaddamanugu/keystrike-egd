@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPERATION: KEYSTRIKE — Xenotech Typing War</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/campaign.css" />
+  <link rel="stylesheet" href="css/fx.css" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <canvas id="gameFxCanvas" class="game-fx-canvas" aria-hidden="true"></canvas>
+  <div id="fxLayer" class="fx-layer" aria-hidden="true"></div>
+  <div id="cinematicRoot" class="cinematic-root" hidden>
+    <div class="cinematic-stars" aria-hidden="true"></div>
+    <div class="cinematic-vignette" aria-hidden="true"></div>
+    <div class="cinematic-scanlines" aria-hidden="true"></div>
+    <div class="cinematic-frame">
+      <p class="cinematic-badge"></p>
+      <h2 class="cinematic-title"></h2>
+      <div class="cinematic-lines" hidden></div>
+      <div class="cinematic-prose" hidden></div>
+      <button type="button" class="btn primary cinematic-next">Continue</button>
+      <button type="button" class="cinematic-skip">Skip briefing</button>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="top">
+      <div class="brand">
+        <span class="brand-mark brand-mark--war" aria-hidden="true"></span>
+        <div>
+          <h1>OPERATION: KEYSTRIKE</h1>
+          <p class="tagline">FBI xenotech program · alien lattice warfare · typing is your weapon</p>
+        </div>
+      </div>
+      <div class="top-stats" id="topStats" aria-live="polite"></div>
+    </header>
+
+    <aside class="sidebar" aria-label="Mission list">
+      <h2>Mission list</h2>
+      <ol class="level-list" id="levelList"></ol>
+    </aside>
+
+    <main class="main">
+      <section
+        class="panel lesson-panel"
+        id="lessonFocus"
+        tabindex="-1"
+        aria-labelledby="lessonTitle"
+      >
+        <div id="bossArena" class="boss-arena" hidden>
+          <div class="boss-arena-header">
+            <div>
+              <div class="boss-codename" id="bossCodename"></div>
+              <h2 class="boss-title-row" id="bossFightTitle">—</h2>
+              <p class="combo-pill" id="bossComboLine" hidden>Combo ×0</p>
+            </div>
+            <div class="boss-orb" id="bossOrb" aria-hidden="true"></div>
+            <span class="boss-phase-pill" id="bossPhasePill">Phase 1 / 3</span>
+          </div>
+          <div class="bar-row enemy">
+            <label>Enemy lattice integrity</label>
+            <div class="bar-track"><div class="bar-fill" id="bossHpFill" style="width:100%"></div></div>
+          </div>
+          <div class="bar-row you">
+            <label>Your shield</label>
+            <div class="bar-track"><div class="bar-fill" id="playerHpFill" style="width:100%"></div></div>
+          </div>
+        </div>
+
+        <div class="lesson-head">
+          <span class="pill" id="levelPill">Training</span>
+          <h2 id="lessonTitle">—</h2>
+        </div>
+        <p class="lesson-blurb" id="lessonBlurb"></p>
+        <p class="perfect-rule" id="missionRule">
+          <span id="missionRuleTraining">Clear each training node with <strong>zero wrong keys</strong> to advance the unlock chain. Speed does not matter.</span>
+          <span id="missionRuleBoss" hidden><strong>Boss duel:</strong> wrong keys shred your shield. Faster correct typing fractures their lattice harder.</span>
+        </p>
+
+        <p class="sr-only" id="typingInstructions">
+          Type the highlighted text. Use the finger map below if you are unsure which finger to use.
+        </p>
+
+        <div class="prompt-wrap">
+          <div class="prompt" id="prompt" role="text" aria-describedby="typingInstructions"></div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="hud">
+          <div class="hud-item"><span class="hud-label">WPM</span><span class="hud-value" id="hudWpm">—</span></div>
+          <div class="hud-item"><span class="hud-label">Accuracy</span><span class="hud-value" id="hudAcc">—</span></div>
+          <div class="hud-item"><span class="hud-label">Errors</span><span class="hud-value" id="hudErr">0</span></div>
+        </div>
+
+        <p class="hint" id="fingerHint" aria-live="polite"></p>
+        <button type="button" class="focus-btn" id="btnFocusLesson">Click here if keys do not register</button>
+      </section>
+
+      <section class="panel visual-panel" aria-label="Finger and keyboard guide">
+        <h3 class="visual-title">Finger map</h3>
+        <div class="hands-row">
+          <div class="hand-card" id="handLeft" aria-hidden="true"></div>
+          <div class="hand-card" id="handRight" aria-hidden="true"></div>
+        </div>
+        <h3 class="visual-title kb-title">Keyboard</h3>
+        <div class="keyboard" id="keyboard" aria-label="Keyboard reference"></div>
+      </section>
+    </main>
+
+    <div class="modal" id="completeModal" hidden role="dialog" aria-modal="true" aria-labelledby="completeTitle">
+      <div class="modal-card">
+        <h3 id="completeTitle">Module complete</h3>
+        <p id="completeBody"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn primary" id="btnNextLevel">Next module</button>
+          <button type="button" class="btn ghost" id="btnReplay">Replay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

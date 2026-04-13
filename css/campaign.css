@@ -1,0 +1,314 @@
+/* FBI / alien war theme overlays — load Orbitron in index.html */
+
+body.cinematic-on {
+  overflow: hidden;
+}
+
+.cinematic-root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: #030508;
+  color: #e8f4ff;
+}
+
+.cinematic-root[hidden] {
+  display: none;
+}
+
+.cinematic-stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.4), transparent),
+    radial-gradient(2px 2px at 60% 70%, rgba(94, 234, 212, 0.35), transparent),
+    radial-gradient(1px 1px at 80% 20%, rgba(255, 255, 255, 0.25), transparent),
+    radial-gradient(1px 1px at 40% 90%, rgba(167, 139, 250, 0.3), transparent),
+    linear-gradient(180deg, #050810 0%, #0a1020 50%, #060a14 100%);
+  background-size: 100% 100%, 100% 100%, 200% 200%, 200% 200%, 100% 100%;
+  animation: starDrift 80s linear infinite;
+}
+
+@keyframes starDrift {
+  to {
+    background-position: 0% 0%, 0% 0%, 100% 50%, -50% 30%, 0% 0%;
+  }
+}
+
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 0%, rgba(0, 0, 0, 0.75) 100%);
+  pointer-events: none;
+}
+
+.cinematic-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.cinematic-frame {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  width: 92%;
+  padding: 2rem 1.75rem;
+  border: 1px solid rgba(94, 234, 212, 0.25);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(15, 20, 35, 0.92), rgba(8, 12, 22, 0.95));
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 40px 100px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(94, 234, 212, 0.08);
+}
+
+.cinematic-badge {
+  font-family: "Orbitron", var(--font, sans-serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: #5eead4;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+}
+
+.cinematic-title {
+  font-family: "Orbitron", var(--font, sans-serif);
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  background: linear-gradient(90deg, #e0f7ff, #a5f3fc, #c4b5fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cinematic-lines {
+  margin-bottom: 1.75rem;
+}
+
+.cinematic-line {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.9);
+  margin: 0 0 1rem;
+}
+
+.cinematic-prose {
+  margin-bottom: 1.5rem;
+}
+
+.cinematic-chapter-title {
+  font-family: "Orbitron", var(--font, sans-serif);
+  font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+  margin: 0 0 0.5rem;
+  color: #f0f9ff;
+}
+
+.cinematic-subtitle {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #f87171;
+  margin: 0 0 1.25rem;
+}
+
+.cinematic-para {
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: rgba(203, 213, 225, 0.95);
+  margin: 0 0 1.1rem;
+}
+
+.cinematic-next {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  display: block;
+}
+
+.cinematic-skip {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  color: rgba(148, 163, 184, 0.85);
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cinematic-skip:hover {
+  color: #94a3b8;
+}
+
+/* Boss arena */
+.boss-arena {
+  margin-bottom: 1.15rem;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(127, 29, 29, 0.15), rgba(30, 27, 75, 0.35));
+  border: 1px solid rgba(248, 113, 113, 0.22);
+}
+
+.boss-arena[hidden] {
+  display: none !important;
+}
+
+.boss-arena-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.boss-codename {
+  font-family: "Orbitron", var(--font, sans-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: #fca5a5;
+}
+
+.boss-title-row {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0.2rem 0 0;
+}
+
+.boss-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fecaca, #7f1d1d 45%, #1e1b4b 100%);
+  box-shadow:
+    0 0 40px rgba(248, 113, 113, 0.45),
+    0 0 80px rgba(99, 102, 241, 0.25);
+  animation: bossPulse 2.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes bossPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 40px rgba(248, 113, 113, 0.45), 0 0 80px rgba(99, 102, 241, 0.25);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 56px rgba(248, 113, 113, 0.55), 0 0 100px rgba(99, 102, 241, 0.35);
+  }
+}
+
+.boss-phase-pill {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  color: #5eead4;
+}
+
+.bar-row {
+  margin-bottom: 0.65rem;
+}
+
+.bar-row label {
+  display: block;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted, #8b93a8);
+  margin-bottom: 0.25rem;
+}
+
+.bar-track {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.bar-row.enemy .bar-fill {
+  background: linear-gradient(90deg, #f87171, #c084fc);
+}
+
+.bar-row.you .bar-fill {
+  background: linear-gradient(90deg, #34d399, #5eead4);
+}
+
+.lesson-panel.boss-hit {
+  animation: panelShake 0.35s ease;
+}
+
+@keyframes panelShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.level-btn.boss-btn {
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  background: rgba(127, 29, 29, 0.12);
+}
+
+.level-btn.boss-btn.active {
+  border-color: rgba(248, 113, 113, 0.55);
+  background: rgba(127, 29, 29, 0.22);
+}
+
+.level-btn.boss-btn .num {
+  color: #fca5a5;
+}
+
+.level-btn.boss-btn.done .num {
+  color: #4ade80;
+}
+
+.brand-mark.brand-mark--war {
+  background: linear-gradient(140deg, #f87171, #6366f1, #5eead4);
+  box-shadow: 0 10px 32px rgba(248, 113, 113, 0.25);
+}
+
+.combo-pill {
+  font-family: var(--mono, monospace);
+  font-size: 0.75rem;
+  color: #fde047;
+  margin-top: 0.35rem;
+}
+
+.mission-rule-boss {
+  background: rgba(127, 29, 29, 0.12) !important;
+  border-color: rgba(248, 113, 113, 0.25) !important;
+}

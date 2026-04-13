@@ -1,0 +1,123 @@
+/** 20 progression modules — home row → full keyboard & punctuation */
+export const LEVELS = [
+  {
+    id: 1,
+    title: "Home anchors",
+    blurb: "Feel the bumps on F and J. Alternate gently — rhythm beats rushing.",
+    text: "fj fj fj fj fj",
+  },
+  {
+    id: 2,
+    title: "Ring fingers",
+    blurb: "Ring fingers own D and K on the home row.",
+    text: "dk dk dk dk dk",
+  },
+  {
+    id: 3,
+    title: "Middle column",
+    blurb: "Middle fingers on S and L.",
+    text: "sl sl sl sl sl",
+  },
+  {
+    id: 4,
+    title: "Pinky reach",
+    blurb: "Pinkies handle A and the semicolon — small movements.",
+    text: "a; a; a; a; a;",
+  },
+  {
+    id: 5,
+    title: "Full home row",
+    blurb: "The classic line. Say it in your head as you type.",
+    text: "asdf jkl; asdf jkl;",
+  },
+  {
+    id: 6,
+    title: "Home words",
+    blurb: "Short words built only from home-row letters.",
+    text: "a sad lad; a salad fad",
+  },
+  {
+    id: 7,
+    title: "Stretch words",
+    blurb: "Still close to home — let fingers glide, not jump.",
+    text: "glass hall asks falls",
+  },
+  {
+    id: 8,
+    title: "Top row peek",
+    blurb: "Reach up with the same finger families as home row.",
+    text: "red kite tied deer",
+  },
+  {
+    id: 9,
+    title: "Upper row mix",
+    blurb: "Q, W, O, P join the pattern — look ahead one word.",
+    text: "quick owls prefer quiet water",
+  },
+  {
+    id: 10,
+    title: "Bottom row",
+    blurb: "Z through M on the bottom — keep wrists neutral.",
+    text: "vex the lazy brown fox",
+  },
+  {
+    id: 11,
+    title: "Left-hand lead",
+    blurb: "Notice how much the left hand carries here.",
+    text: "great tigers react fast",
+  },
+  {
+    id: 12,
+    title: "Right-hand lead",
+    blurb: "Right hand takes the lead on these syllables.",
+    text: "jolly monkeys enjoy yummy lilies",
+  },
+  {
+    id: 13,
+    title: "Balanced line",
+    blurb: "Both hands share the load evenly.",
+    text: "typing well is a useful skill",
+  },
+  {
+    id: 14,
+    title: "Spaces & flow",
+    blurb: "Thumbs tap the space bar; keep other fingers on home.",
+    text: "the quick fox jumps nightly",
+  },
+  {
+    id: 15,
+    title: "Longer sentence",
+    blurb: "Think in phrases, not individual letters.",
+    text: "several bright lemons rolled down the quiet lane",
+  },
+  {
+    id: 16,
+    title: "Capitals",
+    blurb: "Hold Shift with the opposite hand when you can.",
+    text: "Hello There From Typing Lab",
+  },
+  {
+    id: 17,
+    title: "Numbers",
+    blurb: "Each digit sits above a letter — same finger as that column.",
+    text: "type 2026 keys in 10 seconds flat",
+  },
+  {
+    id: 18,
+    title: "Punctuation",
+    blurb: "Commas and periods use your weaker fingers — stay soft.",
+    text: "wait, then stop. breathe; continue.",
+  },
+  {
+    id: 19,
+    title: "Mixed drill",
+    blurb: "Letters, digits, and symbols together — accuracy first.",
+    text: "Pack my box with 5 dozen liquor jugs!",
+  },
+  {
+    id: 20,
+    title: "Graduation run",
+    blurb: "Final line — celebrate every correct key.",
+    text: "Sphinx of black quartz, judge my vow! 42 stars.",
+  },
+];

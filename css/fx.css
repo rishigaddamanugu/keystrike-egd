@@ -1,0 +1,129 @@
+/* Fullscreen FX layer (below modals z-50, above app) */
+#fxLayer,
+#gameFxCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 45;
+}
+
+#gameFxCanvas {
+  z-index: 44;
+}
+
+.fx-float {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px currentColor;
+  pointer-events: none;
+  z-index: 46;
+  white-space: nowrap;
+}
+
+.fx-float--bad {
+  color: #fca5a5;
+}
+
+.fx-float--combo {
+  color: #fde047;
+  font-size: 1.1rem;
+}
+
+.fx-screen-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 43;
+  opacity: 0;
+}
+
+.fx-screen-flash--bad {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(248, 113, 113, 0.35) 0%,
+    rgba(127, 29, 29, 0.2) 50%,
+    transparent 70%
+  );
+}
+
+.fx-screen-flash--good {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(94, 234, 212, 0.25) 0%,
+    rgba(167, 139, 250, 0.15) 50%,
+    transparent 65%
+  );
+}
+
+.fx-bolt {
+  position: fixed;
+  width: 5px;
+  margin-left: -2.5px;
+  margin-top: 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    to top,
+    rgba(94, 234, 212, 0.05),
+    rgba(94, 234, 212, 0.95),
+    #f0fdfa
+  );
+  box-shadow:
+    0 0 16px rgba(94, 234, 212, 0.9),
+    0 0 32px rgba(167, 139, 250, 0.45);
+  pointer-events: none;
+  z-index: 46;
+  transform-origin: 50% 100%;
+}
+
+/* Prompt “live” feel */
+.prompt span.current {
+  animation: promptPulse 1.1s ease-in-out infinite;
+}
+
+@keyframes promptPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px var(--accent, #5eead4);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px var(--accent, #5eead4),
+      0 0 18px rgba(94, 234, 212, 0.45);
+    filter: brightness(1.12);
+  }
+}
+
+/* Ambient war grid (behind UI, above body gradient) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(94, 234, 212, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 212, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  animation: gridShift 28s linear infinite;
+  pointer-events: none;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes gridShift {
+  to {
+    background-position: 48px 48px;
+  }
+}
+
+/* Boss HP bar hit flash handled by GSAP filter — add transition fallback */
+.bar-fill {
+  transition: filter 0.15s ease;
+}
