@@ -61,9 +61,16 @@ export function createCinematicController(rootEl) {
         return;
       }
 
+      /* Outro tween may leave opacity on the lines container — children would stay invisible */
+      g.killTweensOf([...linesEl.querySelectorAll(".cinematic-line")]);
+      g.killTweensOf([badgeEl, titleEl, linesEl, nextBtn]);
+      g.set(linesEl, { clearProps: "opacity,transform,visibility" });
+      g.set([badgeEl, titleEl], { clearProps: "opacity,transform" });
+
       badgeEl.textContent = sc.badge || "";
       titleEl.textContent = sc.title || "";
       linesEl.innerHTML = "";
+      linesEl.hidden = false;
       sc.lines.forEach((line) => {
         const p = document.createElement("p");
         p.className = "cinematic-line";
@@ -103,7 +110,9 @@ export function createCinematicController(rootEl) {
         onComplete();
         return;
       }
-      g.to([linesEl, titleEl, badgeEl], {
+      const lineNodes = [...linesEl.querySelectorAll(".cinematic-line")];
+      /* Do not tween linesEl itself — GSAP leaves opacity:0 on the parent and hides all later scenes */
+      g.to([...lineNodes, titleEl, badgeEl], {
         opacity: 0,
         y: -12,
         duration: 0.35,
