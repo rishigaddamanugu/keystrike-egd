@@ -26,7 +26,7 @@ const FINGER_LABELS = {
   RM: "Right middle",
   RR: "Right ring",
   RP: "Right pinky",
-  TH: "Thumbs — space bar",
+  TH: "Thumbs - space bar",
 };
 
 function shiftComboForChar(ch) {
@@ -289,7 +289,7 @@ function updateFingerAndKeyboardHighlights() {
     ? `${FINGER_LABELS[f] || f}`
     : "Use the highlighted key on the board.";
   const keyLabel =
-    nextCh === " " ? "space" : nextCh === "\n" ? "Enter" : `“${nextCh}”`;
+    nextCh === " " ? "space" : nextCh === "\n" ? "Enter" : `"${nextCh}"`;
   const shift = shiftComboForChar(nextCh);
   els.fingerHint.innerHTML = shift
     ? `<strong>${fingerLine}</strong><br><span class="hint-sub">${shift} for ${keyLabel}</span>`
@@ -326,8 +326,8 @@ function renderPrompt() {
         : 0;
     const gross = st.typed + st.errors;
     const acc = gross > 0 ? Math.round((st.typed / gross) * 1000) / 10 : 100;
-    els.hudWpm.textContent = bossRunner.startedAt ? String(st.wpm) : "—";
-    els.hudAcc.textContent = bossRunner.startedAt ? `${acc}%` : "—";
+    els.hudWpm.textContent = bossRunner.startedAt ? String(st.wpm) : "-";
+    els.hudAcc.textContent = bossRunner.startedAt ? `${acc}%` : "-";
     els.hudErr.textContent = String(st.errors);
     return;
   }
@@ -338,8 +338,8 @@ function renderPrompt() {
     elapsedMin > 0.04 ? Math.round(charIndex / 5 / elapsedMin) : 0;
   const acc =
     gross > 0 ? Math.round((charIndex / gross) * 1000) / 10 : 100;
-  els.hudWpm.textContent = startedAt ? String(wpm) : "—";
-  els.hudAcc.textContent = startedAt ? `${acc}%` : "—";
+  els.hudWpm.textContent = startedAt ? String(wpm) : "-";
+  els.hudAcc.textContent = startedAt ? `${acc}%` : "-";
   els.hudErr.textContent = String(errors);
 }
 
@@ -430,7 +430,7 @@ function onBossUiUpdate(st) {
   charIndex = st.charIndex;
   if (st.combo > 2) {
     els.bossComboLine.hidden = false;
-    els.bossComboLine.textContent = `Combo ×${st.combo} — faster typing amplifies lattice fracture`;
+    els.bossComboLine.textContent = `Combo x${st.combo} - faster typing does more damage`;
   } else {
     els.bossComboLine.hidden = true;
   }
@@ -536,7 +536,7 @@ function renderCampaignSidebar() {
 
   const doneMods = progress.done.size;
   const bosses = progress.bossesBeat.filter(Boolean).length;
-  els.topStats.textContent = `${doneMods} / ${LEVELS.length} training cleared · ${bosses} / 3 bosses neutralized`;
+  els.topStats.textContent = `${doneMods} / ${LEVELS.length} training cleared | ${bosses} / 3 bosses defeated`;
 }
 
 function afterPerfectTraining() {
@@ -575,12 +575,12 @@ function completeLevel() {
   els.completeTitle.textContent = "Training node secured";
   let extra = "";
   if (levelIndex === 5 && !progress.bossesBeat[0])
-    extra = " Boss encounter ORB-9 is live in the mission list — clear it to unlock deeper sectors.";
+    extra = " Boss encounter ORB-9 is now unlocked in the mission list.";
   else if (levelIndex === 12 && !progress.bossesBeat[1])
     extra = " Bastion core TOWER-PRIME awaits in the mission list.";
   else if (levelIndex === 19 && !progress.bossesBeat[2])
-    extra = " Final carrier duel unlocked — this is the war’s endgame.";
-  els.completeBody.textContent = `Perfect run — zero mistakes. “${L.title}” at about ${wpm} WPM.${extra}`;
+    extra = " Final carrier duel unlocked.";
+  els.completeBody.textContent = `Perfect run: zero mistakes. "${L.title}" at about ${wpm} WPM.${extra}`;
 
   els.completeModal.hidden = false;
   const hasNext =
@@ -610,7 +610,7 @@ function showImperfectCompletion() {
   const L = currentLevel();
   els.completeModal.classList.add("modal--imperfect");
   els.completeTitle.textContent = "Perfect run required";
-  els.completeBody.textContent = `You reached the end of “${L.title}” with ${errors} wrong key${errors === 1 ? "" : "s"}. Clear this node with zero mistakes — take as long as you need.`;
+  els.completeBody.textContent = `You reached the end of "${L.title}" with ${errors} wrong key${errors === 1 ? "" : "s"}. Clear this node with zero mistakes. Take as long as you need.`;
   els.btnNextLevel.style.display = "none";
   els.btnReplay.textContent = "Try again";
   els.completeModal.hidden = false;
@@ -643,8 +643,8 @@ function handleBossWin() {
       bid === 2 ? "War lattice collapsed" : "Boss neutralized";
     els.completeBody.textContent =
       bid === 2
-        ? "Their flagship lost sync. Earth adopts the keystrike lattice — you held the line."
-        : "Enemy node fractured. New training sectors are online. The invasion adapts — so do we.";
+        ? "Their flagship lost sync. Earth can now use this typing system."
+        : "Enemy node defeated. New training sectors are now open.";
     els.btnNextLevel.style.display = "none";
     els.btnReplay.textContent = "Continue";
     els.completeModal.hidden = false;
@@ -661,7 +661,7 @@ function handleBossLose() {
   els.completeModal.classList.add("modal--imperfect");
   els.completeTitle.textContent = "Shield collapsed";
   els.completeBody.textContent =
-    "Your shield hit zero. The alien lattice outpaced your corrections — stabilize your accuracy and try the sync duel again.";
+    "Your shield hit zero. Try the sync duel again and focus on accuracy.";
   els.btnNextLevel.style.display = "none";
   els.btnReplay.textContent = "Re-engage";
   els.completeModal.hidden = false;

@@ -123,7 +123,7 @@ body::after {
   }
 }
 
-/* Boss HP bar hit flash handled by GSAP filter — add transition fallback */
+/* Boss HP bar hit flash handled by GSAP filter - add transition fallback */
 .bar-fill {
   transition: filter 0.15s ease;
 }

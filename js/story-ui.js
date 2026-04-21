@@ -61,7 +61,7 @@ export function createCinematicController(rootEl) {
         return;
       }
 
-      /* Outro tween may leave opacity on the lines container — children would stay invisible */
+      /* Outro tween may leave opacity on the lines container - children would stay invisible */
       g.killTweensOf([...linesEl.querySelectorAll(".cinematic-line")]);
       g.killTweensOf([badgeEl, titleEl, linesEl, nextBtn]);
       g.set(linesEl, { clearProps: "opacity,transform,visibility" });
@@ -111,7 +111,7 @@ export function createCinematicController(rootEl) {
         return;
       }
       const lineNodes = [...linesEl.querySelectorAll(".cinematic-line")];
-      /* Do not tween linesEl itself — GSAP leaves opacity:0 on the parent and hides all later scenes */
+      /* Do not tween linesEl itself - GSAP leaves opacity:0 on the parent and hides all later scenes */
       g.to([...lineNodes, titleEl, badgeEl], {
         opacity: 0,
         y: -12,

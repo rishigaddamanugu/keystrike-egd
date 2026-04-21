@@ -16,27 +16,27 @@ export const INTRO_SCENES = [
     badge: "FEDERAL BUREAU OF INVESTIGATION",
     title: "CLASSIFIED BRIEFING",
     lines: [
-      "Year 2047. Deep-space telemetry went dark — then the skies lit up.",
-      "They are not here to negotiate. Their ships run on something we barely understand:",
-      "glyph-charged lattices powered entirely by keystroke resonance.",
+      "Year 2047. First contact is confirmed.",
+      "Alien ships use a typing-based control system that powers their weapons.",
+      "Our team is learning that system through training missions.",
     ],
   },
   {
     badge: "THREAT ASSESSMENT // XENOTECH",
     title: "THE ALIEN ADVANTAGE",
     lines: [
-      "Their grids and weapons are roughly ten times more efficient than ours.",
-      "Every strike is keyed to typing velocity and precision — speed is firepower; accuracy is targeting.",
-      "Earth defense is buying time. You are the adaptation program.",
+      "Their system is much more efficient than ours.",
+      "Speed increases output. Accuracy controls targeting.",
+      "Your training prepares you to use the same input style.",
     ],
   },
   {
     badge: "OPERATION: KEYSTRIKE",
     title: "YOUR MISSION",
     lines: [
-      "You will learn their foreign input protocols — mapped to our QWERTY lattice for now.",
-      "Complete each training node flawlessly. Survive three war-grade sync duels.",
-      "When the final carrier falls silent, we take their typing tech — or we lose the planet.",
+      "Complete training modules with clean typing.",
+      "Defeat three boss nodes to unlock the full system.",
+      "Your typing skill powers offense and defense.",
     ],
   },
 ];
@@ -44,30 +44,30 @@ export const INTRO_SCENES = [
 /** Story chapters between acts (after boss victories, before next tier) */
 export const CHAPTER_AFTER_BOSS = {
   0: {
-    title: "ACT I — FIRST CONTACT",
-    subtitle: "The relay splinters",
+    title: "ACT I - FIRST CONTACT",
+    subtitle: "Relay secured",
     paragraphs: [
-      "You punched through the scout node's outer shell. Raw alien ciphertext flooded the channel — then stabilized into something your hands almost recognize.",
-      "HQ is screaming for a full dump. The enemy already retasked a hunter wing toward your grid signature.",
-      "The war just learned your name. Keep typing — the next lock is deeper.",
+      "You cleared the first scout node and recovered usable signal data.",
+      "Command has opened the next training block.",
+      "Keep going. Harder systems are ahead.",
     ],
   },
   1: {
-    title: "ACT II — DEEP SYNC",
-    subtitle: "They escalate",
+    title: "ACT II - DEEP SYNC",
+    subtitle: "System pressure rising",
     paragraphs: [
-      "That wasn't a glitch — it was a handshake. The hive felt you mirror their rhythm.",
-      "Their battle lattice is rewriting local physics. Every correct pulse you send buys a city block another minute of power.",
-      "One more bastion stands between their flagship and continental command.",
+      "The enemy network is adapting to your typing rhythm.",
+      "Your clean inputs keep defensive systems online.",
+      "One final command node remains.",
     ],
   },
   2: {
-    title: "ACT III — LAST CARRIER",
-    subtitle: "Endgame",
+    title: "ACT III - LAST CARRIER",
+    subtitle: "Final operation",
     paragraphs: [
-      "The final carrier unfurls like a wound in the sky. Its weapon trees drink from the same typing wells you have been learning to steal.",
-      "This is the sync duel that decides if Earth adopts their approach — or vanishes trying.",
-      "No backup keystrokes. No second Earth. Finish the lattice.",
+      "The final carrier is online and active.",
+      "This is the last sync duel in the campaign.",
+      "Finish the sequence to complete the mission.",
     ],
   },
 };
@@ -77,7 +77,7 @@ export const BOSSES = [
     id: 0,
     codename: "SIGNAL: ORB-9",
     title: "Scout Lattice Guardian",
-    tagline: "First alien keystrike node — fragile but lethal if you fumble.",
+    tagline: "First boss node. Learn the timing and stay accurate.",
     bossMaxHp: 100,
     playerMaxHp: 100,
     phases: [
@@ -90,7 +90,7 @@ export const BOSSES = [
     id: 1,
     codename: "SIGNAL: TOWER-PRIME",
     title: "Bastion Typing Core",
-    tagline: "Heavy interference — speed feeds your weapon lattice; errors cost blood.",
+    tagline: "Second boss node. Speed helps, but errors are costly.",
     bossMaxHp: 140,
     playerMaxHp: 100,
     phases: [

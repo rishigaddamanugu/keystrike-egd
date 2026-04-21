@@ -1,9 +1,9 @@
-/** 20 progression modules — home row → full keyboard & punctuation */
+/** 20 progression modules: home row to full keyboard and punctuation */
 export const LEVELS = [
   {
     id: 1,
     title: "Home anchors",
-    blurb: "Feel the bumps on F and J. Alternate gently — rhythm beats rushing.",
+    blurb: "Find the bumps on F and J. Type in a steady rhythm.",
     text: "fj fj fj fj fj",
   },
   {
@@ -21,7 +21,7 @@ export const LEVELS = [
   {
     id: 4,
     title: "Pinky reach",
-    blurb: "Pinkies handle A and the semicolon — small movements.",
+    blurb: "Pinkies handle A and semicolon. Keep movements small.",
     text: "a; a; a; a; a;",
   },
   {
@@ -39,7 +39,7 @@ export const LEVELS = [
   {
     id: 7,
     title: "Stretch words",
-    blurb: "Still close to home — let fingers glide, not jump.",
+    blurb: "Still close to home. Let fingers glide, not jump.",
     text: "glass hall asks falls",
   },
   {
@@ -51,13 +51,13 @@ export const LEVELS = [
   {
     id: 9,
     title: "Upper row mix",
-    blurb: "Q, W, O, P join the pattern — look ahead one word.",
+    blurb: "Q, W, O, and P join the pattern. Look ahead one word.",
     text: "quick owls prefer quiet water",
   },
   {
     id: 10,
     title: "Bottom row",
-    blurb: "Z through M on the bottom — keep wrists neutral.",
+    blurb: "Use Z through M on the bottom row. Keep wrists neutral.",
     text: "vex the lazy brown fox",
   },
   {
@@ -99,25 +99,25 @@ export const LEVELS = [
   {
     id: 17,
     title: "Numbers",
-    blurb: "Each digit sits above a letter — same finger as that column.",
+    blurb: "Each digit sits above a letter. Use the same finger for that column.",
     text: "type 2026 keys in 10 seconds flat",
   },
   {
     id: 18,
     title: "Punctuation",
-    blurb: "Commas and periods use your weaker fingers — stay soft.",
+    blurb: "Commas and periods use weaker fingers. Stay relaxed.",
     text: "wait, then stop. breathe; continue.",
   },
   {
     id: 19,
     title: "Mixed drill",
-    blurb: "Letters, digits, and symbols together — accuracy first.",
+    blurb: "Letters, digits, and symbols together. Accuracy first.",
     text: "Pack my box with 5 dozen liquor jugs!",
   },
   {
     id: 20,
     title: "Graduation run",
-    blurb: "Final line — celebrate every correct key.",
+    blurb: "Final line. Focus on clean typing.",
     text: "Sphinx of black quartz, judge my vow! 42 stars.",
   },
 ];

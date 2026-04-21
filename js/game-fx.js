@@ -242,7 +242,7 @@ export const gameFx = {
     shakePanel("#lessonFocus");
   },
 
-  /** Boss: correct — bolt to orb + particles */
+  /** Boss: correct - bolt to orb + particles */
   bossHit() {
     const cur = document.querySelector("#prompt .current");
     const key = document.querySelector(".key.next");
@@ -275,7 +275,7 @@ export const gameFx = {
     }
   },
 
-  /** Boss: wrong — shield damage feel */
+  /** Boss: wrong - shield damage feel */
   bossMiss(damage) {
     const orb = document.getElementById("bossOrb");
     const p = elCenter(orb) || { x: innerWidth / 2, y: 200 };
