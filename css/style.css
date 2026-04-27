@@ -315,7 +315,9 @@ body {
   border-radius: 14px;
   border: 1px solid var(--line);
   min-height: 5.75rem;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .prompt span {
