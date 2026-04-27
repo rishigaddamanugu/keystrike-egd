@@ -14,6 +14,29 @@ export function createCinematicController(rootEl) {
   const nextBtn = qs(rootEl, ".cinematic-next");
   const skipBtn = qs(rootEl, ".cinematic-skip");
   const gsap = () => window.gsap;
+  let keyHandlerAttached = false;
+
+  function onCinematicKeydown(e) {
+    if (rootEl.hidden) return;
+    if (e.key === "Enter") {
+      const t = e.target;
+      if (t === nextBtn || t === skipBtn) return;
+      e.preventDefault();
+      nextBtn.click();
+    }
+  }
+
+  function attachKeyHandler() {
+    if (keyHandlerAttached) return;
+    document.addEventListener("keydown", onCinematicKeydown);
+    keyHandlerAttached = true;
+  }
+
+  function detachKeyHandler() {
+    if (!keyHandlerAttached) return;
+    document.removeEventListener("keydown", onCinematicKeydown);
+    keyHandlerAttached = false;
+  }
 
   function hideAllModes() {
     linesEl.hidden = true;
@@ -25,12 +48,14 @@ export function createCinematicController(rootEl) {
   function open() {
     rootEl.hidden = false;
     document.body.classList.add("cinematic-on");
+    attachKeyHandler();
   }
 
   function close() {
     rootEl.hidden = true;
     document.body.classList.remove("cinematic-on");
     titleEl.style.display = "";
+    detachKeyHandler();
     gsap()?.killTweensOf([badgeEl, titleEl, linesEl, proseEl, nextBtn]);
   }
 

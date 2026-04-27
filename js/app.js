@@ -16,6 +16,7 @@ import { gameFx } from "./game-fx.js";
 
 const STORAGE_KEY = "keystrike-progress-v2";
 const LEGACY_KEY = "keystrike-progress-v1";
+const FX_STORAGE_KEY = "keystrike-reduced-effects-v1";
 
 const FINGER_LABELS = {
   LP: "Left pinky",
@@ -55,6 +56,7 @@ let campaignList = buildCampaignList();
 let selectedKey = "m-0";
 let prevBossHp = null;
 let prevPlayerHp = null;
+let reducedEffects = false;
 
 function clampLevelIndex(i) {
   return Math.max(0, Math.min(LEVELS.length - 1, i));
@@ -118,6 +120,14 @@ function loadProgress() {
     seenIntro: false,
     lastSel: "m-0",
   };
+}
+
+function loadReducedEffects() {
+  try {
+    return localStorage.getItem(FX_STORAGE_KEY) === "1";
+  } catch (_) {
+    return false;
+  }
 }
 
 function applyGateCaps(p = progress) {
@@ -202,6 +212,8 @@ const els = {
   bossComboLine: document.getElementById("bossComboLine"),
   missionRuleTraining: document.getElementById("missionRuleTraining"),
   missionRuleBoss: document.getElementById("missionRuleBoss"),
+  errorFeedback: document.getElementById("errorFeedback"),
+  fxToggle: document.getElementById("fxToggle"),
 };
 
 const cinematic = createCinematicController(
@@ -343,6 +355,23 @@ function renderPrompt() {
   els.hudErr.textContent = String(errors);
 }
 
+function displayChar(ch) {
+  if (ch === " ") return "space";
+  return ch;
+}
+
+function setErrorFeedback(expected, typed) {
+  if (!els.errorFeedback) return;
+  els.errorFeedback.textContent = `Mistype: expected "${displayChar(
+    expected
+  )}", got "${displayChar(typed)}".`;
+}
+
+function clearErrorFeedback() {
+  if (!els.errorFeedback) return;
+  els.errorFeedback.textContent = "";
+}
+
 function pulseWrong() {
   const cur = els.prompt.querySelector(".current");
   if (!cur) return;
@@ -448,6 +477,7 @@ function beginBossFight(bossId) {
   errors = 0;
   startedAt = null;
   completed = false;
+  clearErrorFeedback();
   prevBossHp = null;
   prevPlayerHp = null;
   els.completeModal.hidden = true;
@@ -482,6 +512,7 @@ function startTraining(idx) {
   errors = 0;
   startedAt = null;
   completed = false;
+  clearErrorFeedback();
   els.completeModal.hidden = true;
   setTrainingUI();
   const L = currentLevel();
@@ -583,20 +614,25 @@ function completeLevel() {
   els.completeBody.textContent = `Perfect run: zero mistakes. "${L.title}" at about ${wpm} WPM.${extra}`;
 
   els.completeModal.hidden = false;
-  const hasNext =
-    levelIndex < LEVELS.length - 1 ||
-    (levelIndex === 5 && !progress.bossesBeat[0]) ||
-    (levelIndex === 12 && !progress.bossesBeat[1]);
+  const gateBossId =
+    levelIndex === 5 && !progress.bossesBeat[0]
+      ? 0
+      : levelIndex === 12 && !progress.bossesBeat[1]
+        ? 1
+        : levelIndex === 19 && !progress.bossesBeat[2]
+          ? 2
+          : null;
   els.btnNextLevel.style.display =
     levelIndex < LEVELS.length - 1 ? "inline-block" : "none";
-  if (levelIndex === 5 && !progress.bossesBeat[0])
-    els.btnNextLevel.style.display = "none";
-  if (levelIndex === 12 && !progress.bossesBeat[1])
-    els.btnNextLevel.style.display = "none";
-  if (levelIndex === 19 && !progress.bossesBeat[2])
-    els.btnNextLevel.style.display = "none";
-
-  els.btnReplay.textContent = "Replay";
+  els.btnNextLevel.textContent = "Next module";
+  if (gateBossId !== null) {
+    els.completeModal.dataset.outcome = `trainingGateBoss${gateBossId}`;
+    els.btnNextLevel.style.display = "inline-block";
+    els.btnNextLevel.textContent = "Start boss battle";
+    els.btnReplay.textContent = "Replay";
+  } else {
+    els.btnReplay.textContent = "Replay";
+  }
   renderCampaignSidebar();
   gameFx.trainingVictory();
   playTone(660, 0.1);
@@ -680,17 +716,35 @@ function onKeyDown(e) {
     return;
   }
 
+  if (
+    e.key === "R" &&
+    !e.ctrlKey &&
+    !e.metaKey &&
+    !e.altKey
+  ) {
+    e.preventDefault();
+    clearErrorFeedback();
+    if (mode === "boss" && activeBossId != null) beginBossFight(activeBossId);
+    else if (mode === "training") startTraining(levelIndex);
+    return;
+  }
+
   if (mode === "boss" && bossRunner) {
-    const result = bossRunner.handleKeyDown(e);
-    if (result === "win" || result === "continue") {
+    const rawResult = bossRunner.handleKeyDown(e);
+    const result = typeof rawResult === "string" ? { type: rawResult } : rawResult;
+    if (!result) return;
+    if (result.type === "win" || result.type === "continue") {
+      clearErrorFeedback();
       gameFx.bossHit();
     }
-    if (result === "win") {
+    if (result.type === "win") {
       handleBossWin();
-    } else if (result === "lose") {
+    } else if (result.type === "lose") {
+      setErrorFeedback(result.expected, result.typed);
       handleBossLose();
-    } else if (result === "error") {
-      gameFx.bossMiss(10 + bossRunner.phase * 4);
+    } else if (result.type === "error") {
+      setErrorFeedback(result.expected, result.typed);
+      gameFx.bossMiss(result.hit || 0);
       els.lessonFocus.classList.remove("boss-hit");
       void els.lessonFocus.offsetWidth;
       els.lessonFocus.classList.add("boss-hit");
@@ -713,6 +767,7 @@ function onKeyDown(e) {
   if (printable === expected) {
     playTone(720, 0.04);
     gameFx.trainingHit();
+    clearErrorFeedback();
     charIndex++;
     renderPrompt();
     gameFx.pulseWpm(els.hudWpm);
@@ -728,6 +783,7 @@ function onKeyDown(e) {
     updateFingerAndKeyboardHighlights();
   } else {
     errors++;
+    setErrorFeedback(expected, printable);
     playTone(160, 0.1);
     gameFx.trainingMiss();
     pulseWrong();
@@ -755,7 +811,10 @@ function restoreSelection() {
 }
 
 function init() {
+  reducedEffects = loadReducedEffects();
   gameFx.init();
+  gameFx.setReducedEffects(reducedEffects);
+  if (els.fxToggle) els.fxToggle.checked = reducedEffects;
   renderHands();
   renderKeyboard();
 
@@ -784,7 +843,28 @@ function init() {
     playTone(440, 0.05);
   });
 
+  if (els.fxToggle) {
+    els.fxToggle.addEventListener("change", () => {
+      reducedEffects = !!els.fxToggle.checked;
+      localStorage.setItem(FX_STORAGE_KEY, reducedEffects ? "1" : "0");
+      gameFx.setReducedEffects(reducedEffects);
+      if (reducedEffects) gameFx.stopBossOrbIdle();
+      else if (mode === "boss") gameFx.startBossOrbIdle();
+    });
+  }
+
   els.btnNextLevel.addEventListener("click", () => {
+    const outcome = els.completeModal.dataset.outcome;
+    if (outcome?.startsWith("trainingGateBoss")) {
+      const bid = parseInt(outcome.replace("trainingGateBoss", ""), 10);
+      if (!Number.isNaN(bid)) {
+        els.completeModal.hidden = true;
+        els.completeModal.dataset.outcome = "";
+        openBossWithBriefing(bid);
+        focusLesson();
+        return;
+      }
+    }
     if (mode === "training" && levelIndex < LEVELS.length - 1) {
       startTraining(levelIndex + 1);
     }
@@ -796,6 +876,14 @@ function init() {
     const outcome = els.completeModal.dataset.outcome;
     els.completeModal.hidden = true;
     els.completeModal.dataset.outcome = "";
+    if (outcome?.startsWith("trainingGateBoss")) {
+      const bid = parseInt(outcome.replace("trainingGateBoss", ""), 10);
+      if (!Number.isNaN(bid)) {
+        openBossWithBriefing(bid);
+        focusLesson();
+        return;
+      }
+    }
     if (outcome === "bossWin") {
       let nextMod = 0;
       if (progress.bossesBeat[2]) nextMod = 19;

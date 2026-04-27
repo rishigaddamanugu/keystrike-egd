@@ -16,6 +16,7 @@ let rafId = 0;
 let orbSpinTween;
 let lastComboFx = 0;
 let lastWpmPulseAt = 0;
+let reducedEffects = false;
 
 function g() {
   return window.gsap;
@@ -214,8 +215,17 @@ export const gameFx = {
     canvas.height = window.innerHeight;
   },
 
+  setReducedEffects(value) {
+    reducedEffects = !!value;
+    const canvasEl = document.getElementById("gameFxCanvas");
+    const layerEl = document.getElementById("fxLayer");
+    if (canvasEl) canvasEl.style.display = reducedEffects ? "none" : "";
+    if (layerEl) layerEl.style.display = reducedEffects ? "none" : "";
+  },
+
   /** Training: correct key */
   trainingHit() {
+    if (reducedEffects) return;
     const cur = document.querySelector("#prompt .current");
     const key = document.querySelector(".key.next");
     const target = document.querySelector(".brand-mark--war");
@@ -235,6 +245,7 @@ export const gameFx = {
 
   /** Training: wrong key */
   trainingMiss() {
+    if (reducedEffects) return;
     const cur = document.querySelector("#prompt .current");
     const p = elCenter(cur) || { x: innerWidth / 2, y: innerHeight / 2 };
     spawnParticles(p.x, p.y, COLORS.wrong, 8);
@@ -244,6 +255,7 @@ export const gameFx = {
 
   /** Boss: correct - bolt to orb + particles */
   bossHit() {
+    if (reducedEffects) return;
     const cur = document.querySelector("#prompt .current");
     const key = document.querySelector(".key.next");
     const orb = document.getElementById("bossOrb");
@@ -277,6 +289,7 @@ export const gameFx = {
 
   /** Boss: wrong - shield damage feel */
   bossMiss(damage) {
+    if (reducedEffects) return;
     const orb = document.getElementById("bossOrb");
     const p = elCenter(orb) || { x: innerWidth / 2, y: 200 };
     spawnParticles(p.x, p.y, COLORS.wrong, 14);
@@ -323,6 +336,7 @@ export const gameFx = {
   },
 
   comboMilestone(combo) {
+    if (reducedEffects) return;
     if (combo < 5) return;
     const milestone = Math.floor(combo / 5) * 5;
     if (milestone <= lastComboFx) return;
@@ -350,6 +364,7 @@ export const gameFx = {
   },
 
   startBossOrbIdle() {
+    if (reducedEffects) return;
     const gs = g();
     const orb = document.getElementById("bossOrb");
     if (!gs || !orb) return;
@@ -373,6 +388,7 @@ export const gameFx = {
   },
 
   trainingVictory() {
+    if (reducedEffects) return;
     const fn = window.confetti;
     if (typeof fn === "function") {
       fn({
@@ -395,6 +411,7 @@ export const gameFx = {
   },
 
   bossVictory(bossId) {
+    if (reducedEffects) return;
     const fn = window.confetti;
     if (typeof fn === "function") {
       const burst = () =>

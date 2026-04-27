@@ -103,14 +103,14 @@ export class BossFight {
         const lastPhase = this.phase >= this.def.phases.length - 1;
         if (lastPhase) {
           this._emit();
-          return "win";
+          return { type: "win", expected, typed: printable };
         }
         this.phase++;
         this.charIndex = 0;
       }
 
       this._emit();
-      return "continue";
+      return { type: "continue", expected, typed: printable };
     }
 
     this.errors++;
@@ -119,7 +119,7 @@ export class BossFight {
     this.playerHp = Math.max(0, this.playerHp - hit);
     this.playTone(140, 0.12);
     this._emit();
-    if (this.playerHp <= 0) return "lose";
-    return "error";
+    if (this.playerHp <= 0) return { type: "lose", expected, typed: printable, hit };
+    return { type: "error", expected, typed: printable, hit };
   }
 }

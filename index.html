@@ -39,7 +39,13 @@
           <p class="tagline">Story mode typing practice</p>
         </div>
       </div>
-      <div class="top-stats" id="topStats" aria-live="polite"></div>
+      <div class="top-controls">
+        <div class="top-stats" id="topStats" aria-live="polite"></div>
+        <label class="fx-toggle">
+          <input type="checkbox" id="fxToggle" />
+          <span>Reduced effects</span>
+        </label>
+      </div>
     </header>
 
     <aside class="sidebar" aria-label="Mission list">
@@ -102,6 +108,8 @@
         </div>
 
         <p class="hint" id="fingerHint" aria-live="polite"></p>
+        <p class="error-feedback" id="errorFeedback" aria-live="polite"></p>
+        <p class="restart-hint">Press <kbd>Shift</kbd> + <kbd>R</kbd> to restart this module.</p>
         <button type="button" class="focus-btn" id="btnFocusLesson">Click here if keys do not register</button>
       </section>
 
